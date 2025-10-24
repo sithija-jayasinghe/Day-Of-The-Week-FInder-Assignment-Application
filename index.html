@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="assets/Gemini_Generated_Image_poe7hjpoe7hjpoe7.png">
     <title>Day Finder</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="container">
@@ -21,19 +23,43 @@
         document.getElementById('dayForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
-            let year = parseInt(document.getElementById('year').value);
-            let month = parseInt(document.getElementById('month').value) - 1;
-            let day = parseInt(document.getElementById('day').value);
+            const yearInput = document.getElementById('year').value.trim();
+            const monthInput = document.getElementById('month').value.trim();
+            const dayInput = document.getElementById('day').value.trim();
 
-            if (month < 12 && month >= 0 && day > 0 && day <= 31) {
-                let date = new Date(year, month, day);
-                let options = { weekday: 'long' };
-                let dayOfWeek = new Intl.DateTimeFormat('en-US', options).format(date);
-
-                document.getElementById('result').textContent = `The day of the week is: ${dayOfWeek}`;
-            } else {
-                document.getElementById('result').textContent = 'Please enter a valid date.';
+            if (!yearInput || !monthInput || !dayInput) {
+                document.getElementById('result').textContent = 'Please fill in all fields.';
+                return;
             }
+
+            const year = parseInt(yearInput, 10);
+            const month = parseInt(monthInput, 10);
+            const day = parseInt(dayInput, 10);
+
+            if (isNaN(year) || isNaN(month) || isNaN(day)) {
+                document.getElementById('result').textContent = 'Please enter valid numbers.';
+                return;
+            }
+
+            if (year < 1 || month < 1 || month > 12 || day < 1) {
+                document.getElementById('result').textContent = 'Please enter a valid date.';
+                return;
+            }
+
+            const date = new Date(year, month - 1, day);
+
+            if (
+                date.getFullYear() !== year ||
+                date.getMonth() !== month - 1 ||
+                date.getDate() !== day
+            ) {
+                document.getElementById('result').textContent = 'Please enter a valid date.';
+                return;
+            }
+
+            const options = { weekday: 'long' };
+            const dayOfWeek = new Intl.DateTimeFormat('en-US', options).format(date);
+            document.getElementById('result').textContent = `The day of the week is: ${dayOfWeek}`;
         });
     </script>
 </body>
