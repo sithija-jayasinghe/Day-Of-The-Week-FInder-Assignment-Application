@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Day Finder</title>
+</head>
+<body>
+    <div id="container">
+        <h1>Day of the Week Finder</h1>
+        <form id="dayForm">
+            <input type="number" id="year" placeholder="Year" required>
+            <input type="number" id="month" placeholder="Month (1-12)" required>
+            <input type="number" id="day" placeholder="Day (1-31)" required>
+            <button type="submit">Find Day</button>
+        </form>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        document.getElementById('dayForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let year = parseInt(document.getElementById('year').value);
+            let month = parseInt(document.getElementById('month').value) - 1;
+            let day = parseInt(document.getElementById('day').value);
+
+            if (month < 12 && month >= 0 && day > 0 && day <= 31) {
+                let date = new Date(year, month, day);
+                let options = { weekday: 'long' };
+                let dayOfWeek = new Intl.DateTimeFormat('en-US', options).format(date);
+
+                document.getElementById('result').textContent = `The day of the week is: ${dayOfWeek}`;
+            } else {
+                document.getElementById('result').textContent = 'Please enter a valid date.';
+            }
+        });
+    </script>
+</body>
+</html>
