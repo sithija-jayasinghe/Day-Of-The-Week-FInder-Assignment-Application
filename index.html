@@ -20,15 +20,20 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('year').focus();
+        });
+
         document.getElementById('dayForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
+            const resultElement = document.getElementById('result');
             const yearInput = document.getElementById('year').value.trim();
             const monthInput = document.getElementById('month').value.trim();
             const dayInput = document.getElementById('day').value.trim();
 
             if (!yearInput || !monthInput || !dayInput) {
-                document.getElementById('result').textContent = 'Please fill in all fields.';
+                resultElement.textContent = 'Please fill in all fields.';
                 return;
             }
 
@@ -37,12 +42,12 @@
             const day = parseInt(dayInput, 10);
 
             if (isNaN(year) || isNaN(month) || isNaN(day)) {
-                document.getElementById('result').textContent = 'Please enter valid numbers.';
+                resultElement.textContent = 'Please enter valid numbers.';
                 return;
             }
 
             if (year < 1 || month < 1 || month > 12 || day < 1) {
-                document.getElementById('result').textContent = 'Please enter a valid date.';
+                resultElement.textContent = 'Please enter a valid date.';
                 return;
             }
 
@@ -51,13 +56,25 @@
             if (
                 date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day
             ) {
-                document.getElementById('result').textContent = 'Please enter a valid date.';
+                resultElement.textContent = 'Please enter a valid date (e.g., February 30th is invalid).';
                 return;
             }
 
             const options = { weekday: 'long' };
             const dayOfWeek = new Intl.DateTimeFormat('en-US', options).format(date);
-            document.getElementById('result').textContent = `The day of the week is: ${dayOfWeek}`;
+            const finalMessage = `The day of the week is: ${dayOfWeek}`;
+
+            resultElement.classList.remove('result-reveal');
+            resultElement.textContent = '';
+            
+            void resultElement.offsetWidth; 
+
+            resultElement.classList.add('result-reveal');
+            
+            setTimeout(() => {
+                resultElement.textContent = finalMessage;
+            }, 10);
+            
         });
     </script>
 </body>
