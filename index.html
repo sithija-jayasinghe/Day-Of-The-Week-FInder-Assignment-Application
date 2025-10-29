@@ -12,7 +12,23 @@
         <h1>Day of the Week Finder</h1>
         <form id="dayForm">
             <input type="number" id="year" placeholder="Year" required>
-            <input type="number" id="month" placeholder="Month (1-12)" required>
+            
+            <select id="month" required>
+                <option value="">Select Month</option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+            </select>
+
             <input type="number" id="day" placeholder="Day (1-31)" required>
             <button type="submit">Find Day</button>
         </form>
@@ -54,7 +70,9 @@
             const date = new Date(year, month - 1, day);
 
             if (
-                date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day
+                date.getFullYear() !== year ||
+                date.getMonth() !== month - 1 ||
+                date.getDate() !== day
             ) {
                 resultElement.textContent = 'Please enter a valid date (e.g., February 30th is invalid).';
                 return;
@@ -66,15 +84,14 @@
 
             resultElement.classList.remove('result-reveal');
             resultElement.textContent = '';
-            
-            void resultElement.offsetWidth; 
+
+            void resultElement.offsetWidth;
 
             resultElement.classList.add('result-reveal');
-            
+
             setTimeout(() => {
                 resultElement.textContent = finalMessage;
             }, 10);
-            
         });
     </script>
 </body>

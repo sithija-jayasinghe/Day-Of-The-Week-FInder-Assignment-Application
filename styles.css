@@ -55,7 +55,9 @@ h1 {
     gap: 16px;
 }
 
-#dayForm input {
+/* Common styles for both input and select */
+#dayForm input,
+#dayForm select {
     padding: 16px 20px;
     font-size: 16px;
     border: 2px solid var(--border-color);
@@ -64,7 +66,14 @@ h1 {
     color: var(--text-color);
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     font-family: inherit;
-    -moz-appearance: textfield;
+    appearance: none; /* hides native styles */
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, var(--text-color) 50%), 
+                      linear-gradient(135deg, var(--text-color) 50%, transparent 50%);
+    background-position: calc(100% - 25px) calc(1.3em), calc(100% - 20px) calc(1.3em);
+    background-size: 5px 5px, 5px 5px;
+    background-repeat: no-repeat;
 }
 
 #dayForm input::-webkit-outer-spin-button,
@@ -73,13 +82,15 @@ h1 {
     margin: 0;
 }
 
-#dayForm input:focus {
+#dayForm input:focus,
+#dayForm select:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 4px var(--shadow-color) inset; 
+    box-shadow: 0 0 0 4px var(--shadow-color) inset;
     transform: translateY(-1px);
 }
 
+/* Placeholder color */
 #dayForm input::placeholder {
     color: #a0aec0;
 }
@@ -106,7 +117,7 @@ button[type="submit"]:hover {
 }
 
 button[type="submit"]:active {
-    transform: scale(0.98); 
+    transform: scale(0.98);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -117,7 +128,7 @@ button[type="submit"]:active {
     font-weight: 700;
     text-align: center;
     color: var(--text-color);
-    background: linear-gradient(145deg, #e0eaff 0%, #edf2ff 100%); 
+    background: linear-gradient(145deg, #e0eaff 0%, #edf2ff 100%);
     border-radius: 16px;
     min-height: 70px;
     display: flex;
